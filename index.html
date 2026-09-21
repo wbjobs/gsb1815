@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>权限缓存：IndexedDB + BroadcastChannel + Web Worker</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Permission Cache</p>
+          <h1>权限缓存、TTL、失效广播与降级</h1>
+          <p class="subtitle">打开两个浏览器标签页，可验证 BroadcastChannel 跨页失效与 Worker 后台重新校验。</p>
+        </div>
+        <div class="mode-pill" id="mode">初始化中</div>
+      </section>
+
+      <section class="card permissions-card">
+        <div class="card-header">
+          <div>
+            <h2>当前权限</h2>
+            <p>缓存 key：<code>permission:demo</code>，TTL：8 秒</p>
+          </div>
+          <span class="status" id="status">-</span>
+        </div>
+
+        <div class="metrics">
+          <div><span>数据来源</span><strong id="source">-</strong></div>
+          <div><span>剩余 TTL</span><strong id="ttl">-</strong></div>
+          <div><span>权限版本</span><strong id="version">-</strong></div>
+        </div>
+
+        <div class="permission-box">
+          <span>权限列表</span>
+          <p id="permissions">-</p>
+        </div>
+
+        <div class="actions">
+          <button id="refresh" class="primary">立即重新校验</button>
+          <button id="invalidate" class="danger">失效并广播</button>
+          <button id="grant">模拟后端授权</button>
+          <button id="revoke">模拟后端收权</button>
+          <button id="fail">模拟下一次接口异常</button>
+          <button id="worker-fail">进入 Worker 降级模式</button>
+          <button id="reset">重置演示数据</button>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>验收步骤</h2>
+          <ol class="checklist">
+            <li>点击“失效并广播”：状态立即变为失效，随后接口重新校验。</li>
+            <li>复制两个标签页：任一页失效，另一页立即收到广播并刷新。</li>
+            <li>等待 8 秒：TTL 倒计时归零后自动后台重新校验。</li>
+            <li>点击接口异常：页面出现提示，并保留旧缓存或使用默认降级权限。</li>
+            <li>点击 Worker 降级：刷新后不依赖 Worker，缓存和广播仍可工作。</li>
+          </ol>
+        </article>
+
+        <article class="card">
+          <h2>事件日志</h2>
+          <ul class="logs" id="logs"></ul>
+        </article>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
