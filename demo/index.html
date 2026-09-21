@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>权限缓存 · IndexedDB + BroadcastChannel + Web Worker</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>权限缓存演示</h1>
+    <div class="badges" id="adapterBadges"></div>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>缓存状态 <small>（TTL 倒计时，到期立即重新校验）</small></h2>
+      <table class="grid">
+        <thead>
+          <tr><th>权限 Key</th><th>状态</th><th>TTL 剩余</th><th>缓存值</th><th>操作</th></tr>
+        </thead>
+        <tbody id="cacheRows"></tbody>
+      </table>
+      <div class="actions">
+        <button id="btnInvalidateAll" class="danger">全部失效并广播</button>
+        <button id="btnWarm">重新预热(warm)</button>
+        <a class="btn ghost" href="./index.html" target="_blank" rel="noopener">打开第二个标签页 ↗</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>模拟配置</h2>
+      <div class="form-grid">
+        <label>TTL (ms)
+          <input id="cfgTtl" type="number" min="1000" step="1000" value="10000" />
+        </label>
+        <label>回源延迟 (ms)
+          <input id="cfgLatency" type="number" min="0" step="100" value="400" />
+        </label>
+        <label class="check"><input id="cfgFail" type="checkbox" /> 强制回源失败（测降级/异常提示）</label>
+        <label class="check"><input id="cfgFailIdb" type="checkbox" /> 模拟 IndexedDB 故障</label>
+        <label class="check"><input id="cfgForceMem" type="checkbox" /> 强制使用内存存储</label>
+        <label class="check"><input id="cfgForceTimer" type="checkbox" /> 强制主线程定时器（Worker 降级）</label>
+        <label class="check"><input id="cfgNoBroadcast" type="checkbox" /> 关闭 BroadcastChannel</label>
+      </div>
+      <div class="actions">
+        <button id="btnRebuild" class="primary">按配置重建缓存实例</button>
+      </div>
+      <p class="hint">提示：在 A 标签页点“失效”，B 标签页应在毫秒级收到广播并自动重新校验；把“强制回源失败”打开后再查询/失效，可看到旧值兜底与异常提示。</p>
+    </section>
+
+    <section class="card wide">
+      <h2>事件日志</h2>
+      <div class="actions">
+        <button id="btnClearLog" class="ghost-btn">清空</button>
+      </div>
+      <ul class="log" id="eventLog"></ul>
+    </section>
+  </main>
+
+  <div id="toastHost" class="toast-host" aria-live="polite"></div>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>

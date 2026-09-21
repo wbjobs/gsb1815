@@ -1,0 +1,11 @@
+{
+  "name": "permission-cache",
+  "version": "1.0.0",
+  "description": "权限缓存：IndexedDB + BroadcastChannel + Web Worker，支持 TTL、失效广播与降级",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "serve": "python3 -m http.server 8080"
+  }
+}

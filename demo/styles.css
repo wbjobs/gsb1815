@@ -1,0 +1,68 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #0f1420; color: #e6ebf5; min-height: 100vh;
+}
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; background: #161d2e; border-bottom: 1px solid #243049;
+  position: sticky; top: 0; z-index: 5;
+}
+.topbar h1 { font-size: 18px; margin: 0; }
+.badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid transparent; }
+.badge.ok { background: #10331f; color: #6fe3a1; border-color: #22583a; }
+.badge.off { background: #3a2222; color: #f0a0a0; border-color: #5c3030; }
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 24px; max-width: 1100px; margin: 0 auto; }
+.card { background: #161d2e; border: 1px solid #243049; border-radius: 12px; padding: 16px; }
+.card.wide { grid-column: 1 / -1; }
+.card h2 { font-size: 15px; margin: 0 0 12px; }
+.card h2 small { color: #8a97b1; font-weight: 400; }
+.grid { width: 100%; border-collapse: collapse; font-size: 13px; }
+.grid th, .grid td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #222c42; vertical-align: middle; }
+.grid th { color: #8a97b1; font-weight: 500; }
+.state { font-size: 12px; padding: 2px 8px; border-radius: 999px; }
+.state-fresh { background: #10331f; color: #6fe3a1; }
+.state-stale { background: #3a3410; color: #e6cd7a; }
+.state-expired, .state-missing { background: #3a2222; color: #f0a0a0; }
+.state-fallback { background: #102a3a; color: #7ac7f0; }
+.state-remote { background: #232a44; color: #aab6d6; }
+.ttl { font-variant-numeric: tabular-nums; color: #aab6d6; }
+button, .btn {
+  font: inherit; font-size: 13px; padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid #2e3c5c; background: #1d2740; color: #dce5f7; text-decoration: none; display: inline-block;
+}
+button:hover, .btn:hover { border-color: #46588a; }
+button.primary { background: #2b5cff; border-color: #2b5cff; color: #fff; }
+button.danger { background: #b23b3b; border-color: #b23b3b; color: #fff; }
+button.ghost-btn { background: transparent; }
+.row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.row-actions button { padding: 4px 10px; font-size: 12px; }
+.actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+.form-grid label { font-size: 12px; color: #aab6d6; display: flex; flex-direction: column; gap: 4px; }
+.form-grid label.check { flex-direction: row; align-items: center; gap: 6px; }
+.form-grid input[type="number"] {
+  background: #0f1420; border: 1px solid #2e3c5c; border-radius: 8px; color: #e6ebf5; padding: 7px 10px; font: inherit;
+}
+.hint { font-size: 12px; color: #8a97b1; line-height: 1.6; margin-top: 12px; }
+.log {
+  list-style: none; margin: 0; padding: 0; max-height: 280px; overflow-y: auto;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px;
+}
+.log li { padding: 5px 8px; border-bottom: 1px solid #1d2740; display: flex; gap: 10px; }
+.log .t { color: #5d6b8a; flex: none; width: 86px; }
+.log .msg { color: #c4cee2; word-break: break-all; }
+.log li.warn .ev { color: #e6cd7a; }
+.log li.error .ev { color: #f08f8f; }
+.toast-host { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10; }
+.toast {
+  background: #20293e; border: 1px solid #33446b; border-left: 4px solid #2b5cff;
+  border-radius: 10px; padding: 12px 16px; max-width: 340px; font-size: 13px; line-height: 1.5;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45); animation: slide .25s ease;
+}
+.toast.error { border-left-color: #e05e5e; }
+.toast.warn { border-left-color: #e6cd7a; }
+.toast strong { display: block; margin-bottom: 2px; }
+@keyframes slide { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
